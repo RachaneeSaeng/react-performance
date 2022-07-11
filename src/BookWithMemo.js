@@ -8,6 +8,19 @@ export const BookWithMemo = React.memo(
 
     const [toggle, setToggle] = useState();
 
+    // ############### If we can use memo with useBookStore to avoid it rerender when this component rerender?
+    // Nope, if the client component rerender, the hook must be rerendered always ###############
+    // ############### If we don't use the frequent change state returning from the hook, will that help?
+    // Nope, no different ###############
+    const { addToCart, addToCartDate } = useBookStore();
+
+    useEffect(() => {
+      console.log("addToCart changed");
+    }, [addToCart]);
+
+    useEffect(() => {
+      console.log("addToCartDate changed");
+    }, [addToCartDate]);
 
     return (
       <div>
@@ -24,6 +37,9 @@ export const BookWithMemo = React.memo(
             ))}
           </ul>
         )}
+        <button type="button" onClick={() => addToCart(title)}>
+          Add to cart
+        </button>
         <hr />
       </div>
     );
