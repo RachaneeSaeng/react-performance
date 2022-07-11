@@ -28,9 +28,10 @@ const useBookStore = () => {
       addToCartDate,
       addToCart
     }),
-    [addToCartDate]
-    // ############### If we want client get internal state value, then we have to put that state in dependencies array
-    // Then it will cause client rerender, so if select dependencies list wisely
+    []
+    // ############### If we want client get internal state value, we must return it
+    // Then it will cause client rerender, no matter if you put addToCartDate in deps array or not
+    // However, the addToCartDate will not change if we don't put it in deps array
     // If we end up having no different between with vs without useMemo, we had better to go without it
     // However, we can put useMemo and useCallback on complex internal objects to avoid rerendering in that level instead ###############
   );
