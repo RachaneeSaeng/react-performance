@@ -3,28 +3,22 @@ import React from "react";
 import useBookStore, { memoizedUseHookStore } from "./useBookStore";
 import { useBookStoreInContext } from "./useBookStoreInContext";
 
-export const BookWithMemo = React.memo(
+export const BookWithMemo2 = React.memo(
   ({ title, author, releaseDate, chapters, onClick, otherInfo }) => {
-    console.log("================== render <BookWithMemo> ==================");
+    console.log("================== render <BookWithMemo2> ==================");
 
     const [toggle, setToggle] = useState();
-
-    // // ############### If we can use memo with useBookStore to avoid it rerender when this component rerender?
-    // // Nope, if the client component rerender, the hook must be rerendered always ###############
-    // // ############### If we don't use the frequent change state returning from the hook, will that help?
-    // // Nope, no different ###############
-    // const { addToCart, addToCartDate } = useBookStore();
 
     // ############### using hook inside context also get the same result,
     // just more parties can cause this component rerender ###############
     const { addToCart, addToCartDate } = useBookStoreInContext();
 
     useEffect(() => {
-      console.log("addToCart in BookWithMemo changed");
+      console.log("addToCart in BookWithMemo2 changed");
     }, [addToCart]);
 
     useEffect(() => {
-      console.log("addToCartDate in BookWithMemo changed");
+      console.log("addToCartDate in BookWithMemo2 changed");
     }, [addToCartDate]);
 
     return (
