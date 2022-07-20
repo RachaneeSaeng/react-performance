@@ -4,6 +4,15 @@ const useBookStore = () => {
   console.log("&&&&&&&&&&&&&&&& render useBookStore &&&&&&&&&&&&&&&&");
 
   const [addToCartDate, setAddToCartDate] = useState();
+  const [internalState, setInternalState] = useState();
+
+  // ############### internal state update cause client to rerender even them do not access the state
+  useEffect(() => {
+    const id = setInterval(() => {
+      setInternalState(!internalState);
+    }, 3000);
+    return () => clearInterval(id);
+  }, []);
 
   // const addToCart = title => {
   //   console.log(`Thanks for adding ${title} to your cart`);
