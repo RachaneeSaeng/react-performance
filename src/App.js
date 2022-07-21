@@ -6,7 +6,7 @@ import "./App.css";
 import BookStoreContainer from "./BookStoreContainer";
 
 function App() {
-  const [toggle, setToggle] = useState();
+  const [, setToggle] = useState();
 
   // ############### Function, Array, Object (Date, ..) parameter treated as different object
   // and always cause memo component to rerender ###############
@@ -30,7 +30,7 @@ function App() {
   return (
     <>
       {/* ############### Internal state change always cause the component (App) to rerender ############### */}
-      <button type="button" onClick={() => setToggle(new Date())}>
+      <button type="button" onClick={() => setToggle(toggle => !toggle)}>
         Trigger rerender
       </button>
       <hr />
