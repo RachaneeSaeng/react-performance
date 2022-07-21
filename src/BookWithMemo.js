@@ -13,11 +13,11 @@ export const BookWithMemo = React.memo(
     // // Nope, if the client component rerender, the hook must be rerendered always ###############
     // // ############### If we don't use the frequent change state returning from the hook, will that help?
     // // Nope, no different ###############
-    // const { addToCart, addToCartDate } = useBookStore();
+    const { addToCart, addToCartDate } = useBookStore();
 
     // ############### using hook inside context also get the same result,
     // just more parties can cause this component rerender ###############
-    const { addToCart, addToCartDate } = useBookStoreInContext();
+    // const { addToCart, addToCartDate } = useBookStoreInContext();
 
     useEffect(() => {
       console.log("addToCart in BookWithMemo changed");

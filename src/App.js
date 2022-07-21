@@ -38,11 +38,11 @@ function App() {
       {/* <Book title="Heat" author="John Doe" releaseDate="December 15, 1995" /> */}
 
       {/* ############### Next time rerendering will not render BookWithMemo anymore ############### */}
-      {/* <BookWithMemo
+      <BookWithMemo
         title="Heat"
         author="John Doe"
         releaseDate="December 15, 1995"
-      /> */}
+      />
 
       {/* ############### However explicitly put component will always cause the component to render ############### */}
       {/* <BookWithMemo
@@ -71,7 +71,7 @@ function App() {
         releaseDate="December 15, 1995"
         onClick={popupTheTitle}
       /> */}
-      <BookStoreContainer />
+      {/* <BookStoreContainer /> */}
     </>
   );
 }
