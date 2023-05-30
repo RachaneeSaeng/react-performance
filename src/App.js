@@ -5,11 +5,17 @@ import { BookWithMemo } from "./BookWithMemo";
 import "./App.css";
 import BookStoreContainer from "./BookStoreContainer";
 
-function App() {
-  const [, setToggle] = useState();
+let renderTimes = 0;
 
-  // ############### Function, Array, Object (Date, ..) parameter treated as different object
-  // and always cause memo component to rerender ###############
+function App() {
+  ++renderTimes;
+  console.log(`Render times of App component = ${renderTimes}`);
+
+  // let title = "Cat";
+  const [title, setTitle] = useState("Cat");
+  const [toggle, setToggle] = useState();
+
+  // ############### Function, Array, Object (Date, ..) parameter treated as different object and always cause memo component to rerender ###############
   // const otherInfo = {
   //   author: "John Doe",
   //   reprintDate: new Date("April 15, 2000")
@@ -19,39 +25,61 @@ function App() {
   // const popupTheTitle = title => alert(title);
 
   // ############### useMemo can solve the issue ###############
-  // ############### Note, supplying dependencies parameter = depend on all => no point to useMemo ###############
-  // const chapters = useMemo(() => ["Prologue", "Chapter 1", , "Chapter 2"], []);
-  // const releaseDate = useMemo(() => new Date("December 15, 1995"), []);
-  // const popupTheTitle = useMemo(() => title => alert(title), []);
+  // ############### Note, not supplying dependencies array = depend on all => no point to useMemo ###############
+  const otherInfo = useMemo(
+    () => ({
+      author: "John Doe",
+      reprintDate: new Date("April 15, 2000")
+    }),
+    [toggle]
+  );
+
+  const aFunction = () => {
+    console.log("perform expensive operations");
+    alert(title);
+  };
+
+  const chapters = useMemo(() => ["Prologue", "Chapter 1", , "Chapter 2"], []);
+  const releaseDate = useMemo(() => new Date("December 15, 1995"), []);
+  //const popupTheTitle = useMemo(() => aFunction, []);
 
   // ############### useMemo(() => fn, dependencies) = useCallback(fn, dependencies) ###############
-  // const popupTheTitle = useCallback(title => alert(title), []);
+  // in which case that we want a reset a new function definition? -> when the function that use global values
+  const popupTheTitle = useCallback(aFunction, [title]);
 
   return (
     <>
-      {/* ############### Internal state change always cause the component (App) to rerender ############### */}
-      <button type="button" onClick={() => setToggle(toggle => !toggle)}>
-        Trigger rerender
+      <p>
+        <i>{`Render times of App component = ${renderTimes}`}</i>
+      </p>
+
+      <h3>{title}</h3>
+
+      {/* <button type="button" onClick={() => (title = "Dog")}>
+        Change local var title
+      </button> */}
+
+      <button type="button" onClick={() => setTitle("Dog")}>
+        Change Title state
       </button>
+
+      <button type="button" onClick={() => setToggle(toggle => !toggle)}>
+        Change Toggle state
+      </button>
+
       <hr />
-      {/* ############### Component without memo will always be rerendered when client component rerender ############### */}
-      {/* <Book title="Heat" author="John Doe" releaseDate="December 15, 1995" /> */}
 
-      {/* ############### Next time rerendering will not render BookWithMemo anymore ############### */}
-      <BookWithMemo
-        title="Heat"
-        author="John Doe"
-        releaseDate="December 15, 1995"
-      />
+      {/* ############### Component will always be rerendered when parent component rerender ############### */}
+      {/* <Book title={title} author="John Doe" releaseDate="December 15, 1995" /> */}
 
-      {/* ############### However explicitly put component will always cause the component to render ############### */}
+      {/* ############### Next time rerendering of parent will not rerender BookWithMemo if the passing props not change ############### */}
       {/* <BookWithMemo
-        title="Heat"
+        title={title}
         author="John Doe"
         releaseDate="December 15, 1995"
       /> */}
 
-      {/* ############### Passing  Function, Array, Object (ie. Date etc.) props cause component to rerender ############### */}
+      {/* ############### Passing  Function, Array, Object (ie. Date etc.) props cause component to rerender always ############### */}
       {/* <BookWithMemo
         title="Heat"
         author="John Doe"
@@ -65,12 +93,12 @@ function App() {
         releaseDate="December 15, 1995"
         chapters={chapters}
       /> */}
-      {/* <BookWithMemo
+      <BookWithMemo
         title="Heat"
         author="John Doe"
         releaseDate="December 15, 1995"
         onClick={popupTheTitle}
-      /> */}
+      />
       {/* <BookStoreContainer /> */}
     </>
   );

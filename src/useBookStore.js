@@ -3,7 +3,7 @@ import React, { useCallback, useState, useMemo, useEffect } from "react";
 const useBookStore = () => {
   console.log("&&&&&&&&&&&&&&&& render useBookStore &&&&&&&&&&&&&&&&");
 
-  const [addToCartDate, setAddToCartDate] = useState();
+  const [addedToCart, setAddedToCart] = useState();
   const [, setInternalState] = useState();
 
   // ############### internal state update cause client to rerender even they do not access the state
@@ -14,15 +14,15 @@ const useBookStore = () => {
     return () => clearInterval(id);
   }, []);
 
-  const addToCart = title => {
-    console.log(`Thanks for adding ${title} to your cart`);
-    setAddToCartDate(new Date());
-  };
-
-  // const addToCart = useCallback(title => {
+  // const addToCart = title => {
   //   console.log(`Thanks for adding ${title} to your cart`);
-  //   setAddToCartDate(new Date());
-  // }, []);
+  //   setAddedToCart(title);
+  // };
+
+  const addToCart = useCallback(title => {
+    console.log(`Thanks for adding ${title} to your cart`);
+    setAddedToCart(title);
+  }, []);
 
   // ############### Without useMemo on return object or useCallback on the object property
   // the value of Function, Array, Object (Date, ..) will change everytime of rerendering ###############
@@ -34,7 +34,7 @@ const useBookStore = () => {
   // ############### With useMemo or useCallback, return values will changed only when the deps change ###############
   return useMemo(
     () => ({
-      addToCartDate,
+      addedToCart,
       addToCart
     }),
     []

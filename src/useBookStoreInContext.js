@@ -11,16 +11,16 @@ export const BookStoreContext = createContext();
 export const BookStoreProvider = props => {
   console.log("&&&&&&&&&&&&&&&& render useBookStoreInContext &&&&&&&&&&&&&&&&");
 
-  const [addToCartDate, setAddToCartDate] = useState();
+  const [addedToCart, setAddedToCart] = useState();
 
   // const addToCart = title => {
   //   console.log(`Thanks for adding ${title} to your cart`);
-  //   setAddToCartDate(new Date());
+  //   addedToCart(title);
   // };
 
   const addToCart = useCallback(title => {
     console.log(`Thanks for adding ${title} to your cart`);
-    // setAddToCartDate(new Date());
+    // addedToCart(title);
   }, []);
 
   // const value = {
@@ -30,7 +30,7 @@ export const BookStoreProvider = props => {
 
   const value = useMemo(
     () => ({
-      addToCartDate,
+      addedToCart,
       addToCart
     }),
     []
