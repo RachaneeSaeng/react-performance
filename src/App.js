@@ -1,4 +1,4 @@
-import { useMemo, useState, useCallback } from "react";
+import { useMemo, useState, useCallback, useEffect } from "react";
 import { Book } from "./Book";
 import { BookWithMemo } from "./BookWithMemo";
 
@@ -46,6 +46,18 @@ function App() {
   // ############### useMemo(() => fn, dependencies) = useCallback(fn, dependencies) ###############
   // in which case that we want a reset a new function definition? -> when the function that use global values
   const popupTheTitle = useCallback(aFunction, [title]);
+
+  const functionA = useCallback(() => {
+    const x = 10;
+  }, []);
+
+  useEffect(() => {
+    console.log("[A] execute this because functionA ref changed");
+  }, [functionA]);
+
+  useEffect(() => {
+    console.log("[B] execute this because functionA ref changed");
+  }, [functionA]);
 
   return (
     <>
