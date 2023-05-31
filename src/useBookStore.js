@@ -44,4 +44,4 @@ export default useBookStore;
 // ############### React.memo is a higher order component. it doesn't not work for hook ###############
 // export const memoizedUseHookStore = React.memo(useBookStore);
 // ############### useCallback hook must be called in a React function component or a custom React Hook function ###############
-// export const memoizedUseHookStore = useCallback(useBookStore, []);
+// export const memoizedUseHookStore = useCallback(useBookStore, []); // this will not work
